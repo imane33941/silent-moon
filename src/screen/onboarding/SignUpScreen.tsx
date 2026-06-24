@@ -43,7 +43,7 @@ export function SignUpScreen() {
 
         <View className="mt-auto">
           <TouchableOpacity
-            onPress={() => router.push('/choose-topic')}
+            onPress={() => router.push('/welcome')}
             className="h-[63px] items-center justify-center rounded-full bg-[#8E97FD]"
           >
             <Text className="text-[14px] font-medium text-white">
