@@ -1,11 +1,13 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export function WelcomeScreen() {
+  const router = useRouter();
   return (
     <View className="flex-1">
       <View className="relative">
         <Image
-          source={require('../../../assets/welcome.png')}
+          source={require("../../../assets/welcome.png")}
           className="w-[423px] h-[504px]"
           resizeMode="cover"
         />
@@ -16,7 +18,7 @@ export function WelcomeScreen() {
           </Text>
 
           <Image
-            source={require('../../../assets/welcome-header.png')}
+            source={require("../../../assets/welcome-header.png")}
             className="mx-2 h-[30px] w-[30px]"
             resizeMode="cover"
           />
@@ -34,19 +36,22 @@ export function WelcomeScreen() {
           </Text>
 
           <Text className="mt-6 text-center font-light text-[16px] leading-6 text-[#A1A4B2]">
-            Thousand of people are using silent moon{'\n'}
+            Thousand of people are using silent moon{"\n"}
             for small meditation
           </Text>
         </View>
 
         <View className="mt-auto">
-          <TouchableOpacity className="h-15.75 items-center justify-center rounded-full bg-[#8E97FD]">
+          <TouchableOpacity
+            onPress={() => router.push("/choose-topic")}
+            className="h-15.75 items-center justify-center rounded-full bg-[#8E97FD]"
+          >
             <Text className="text-[14px] font-medium text-white">SIGN UP</Text>
           </TouchableOpacity>
 
           <View className="mt-5 flex-row justify-center">
             <Text className="text-[14px] font-medium text-[#A1A4B2]">
-              ALREADY HAVE AN ACCOUNT ?{' '}
+              ALREADY HAVE AN ACCOUNT ?{" "}
             </Text>
             <Text className="text-[14px] font-medium text-[#8E97FD]">
               LOG IN
