@@ -6,6 +6,7 @@ type TopicCardProps = {
   height: number;
   textColor: string;
   image?: any;
+  onPress?: () => void;
 };
 export const TopicCard = ({
   title,
@@ -13,9 +14,11 @@ export const TopicCard = ({
   height,
   textColor,
   image,
+  onPress,
 }: TopicCardProps) => {
   return (
     <Pressable
+      onPress={onPress}
       style={{ backgroundColor: bgColor, height }}
       className="w-[47%] rounded-lg p-3.5 mb-4.5 justify-between"
     >

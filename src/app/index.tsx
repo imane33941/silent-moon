@@ -1,3 +1,5 @@
 import { SignUpScreen } from '../screen/onboarding/SignUpScreen';
 
-export { default } from './reminders';
+export default function App() {
+  return <SignUpScreen />;
+}
