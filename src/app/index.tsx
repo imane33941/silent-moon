@@ -1,5 +1,5 @@
-import { WelcomeScreen } from '../screen/onboarding/WelcomeScreen';
+import { SignUpScreen } from '../screen/onboarding/SignUpScreen';
 
 export default function App() {
-  return <WelcomeScreen />;
+  return <SignUpScreen />;
 }
