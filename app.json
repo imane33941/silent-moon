@@ -11,6 +11,13 @@
       "@react-native-community/datetimepicker"
     ],
     "name": "SilentMoon",
-    "slug": "SilentMoon"
+    "slug": "silent-moon",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "dee16ada-6d45-4f0d-9dd0-5acf682388c3"
+      }
+    },
+    "owner": "emy33"
   }
 }
