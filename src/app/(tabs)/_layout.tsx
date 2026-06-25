@@ -16,7 +16,7 @@ export default function Layout() {
 
       <NativeTabs.Trigger name="meditate">
         <Label>Meditate</Label>
-        <Icon sf="circle.fill" drawable="custom_meditate_drawable" />
+        <Icon sf="figure.mind.and.body" drawable="custom_meditate_drawable" />
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="music">
