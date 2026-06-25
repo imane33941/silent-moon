@@ -1,0 +1,33 @@
+import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
+import '../../global.css';
+
+export default function Layout() {
+  return (
+    <NativeTabs tintColor="#8E97FD">
+      <NativeTabs.Trigger name="home">
+        <Label>Accueil</Label>
+        <Icon sf="house.fill" drawable="custom_home_drawable" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="sleep">
+        <Label>Someil</Label>
+        <Icon sf="moon.fill" drawable="custom_sleep_drawable" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="meditate">
+        <Label>Meditation</Label>
+        <Icon sf="figure.mind.and.body" drawable="custom_meditate_drawable" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="music">
+        <Label>Musique</Label>
+        <Icon sf="music.note" drawable="custom_music_drawable" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="profile">
+        <Label>Profil</Label>
+        <Icon sf="person.fill" drawable="custom_profile_drawable" />
+      </NativeTabs.Trigger>
+    </NativeTabs>
+  );
+}
