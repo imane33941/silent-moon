@@ -1,6 +1,7 @@
 import React from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import DailyCalmCard from "./components/DailyCalmCard";
+import MeditationCourseCard from "./components/MeditationCourseCard";
 
 const categories = [
     { id: "all", name: "Tous", icon: require("../../../assets/icons/Tous.png") },
@@ -10,11 +11,40 @@ const categories = [
     { id: "kids", name: "Enfants", icon: require("../../../assets/icons/Enfant.png") },
 ];
 
+const meditationCourses = [
+    {
+        id: "seven-days-calm",
+        title: "7 jours de calme",
+        image: require("../../../assets/meditate/7dayCalm.png"),
+        height: 210,
+    },
+    {
+        id: "anxiety-release",
+        title: "Libérer l’anxiété",
+        image: require("../../../assets/meditate/anxietyrelease.png"),
+        height: 167,
+    },
+    {
+        id: "how-to-meditate",
+        title: "Comment méditer",
+        image: require("../../../assets/meditate/howTOMeditate.png"),
+        height: 167,
+    },
+    {
+        id: "daily-practice",
+        title: "Pratique quotidienne",
+        image: require("../../../assets/meditate/Mask Group.png"),
+        height: 210,
+    },
+];
+
 export default function MeditateScreen() {
     const [selectedCategory, setSelectedCategory] = React.useState("all");
 
     return (
-        <View className="flex-1 bg-white px-[16px] pt-[74px] items-center ">
+        <ScrollView 
+        contentContainerClassName=" px-[16px] pt-[74px] items-center"
+        className="flex-1 bg-white ">
             <Text className="text-[28px] font-bold text-[#3F414E] mb-3 ">
                 Méditer
             </Text>
@@ -70,7 +100,17 @@ export default function MeditateScreen() {
                     title="Calme du jour"
                     subtitle="30 AVR • PAUSE MÉDITATION"
                 />
+                <View className="w-full flex-row flex-wrap gap-x-6 mt-5 p-2">
+                    {meditationCourses.map((course) => (
+                        <MeditationCourseCard
+                            key={course.id}
+                            title={course.title}
+                            image={course.image}
+                            height={course.height}
+                        />
+                    ))}
+                </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
