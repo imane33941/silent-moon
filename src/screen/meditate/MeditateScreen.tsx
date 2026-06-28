@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import DailyCalmCard from "./components/DailyCalmCard";
 
 const categories = [
     { id: "all", name: "Tous", icon: require("../../../assets/icons/Tous.png") },
@@ -13,7 +14,7 @@ export default function MeditateScreen() {
     const [selectedCategory, setSelectedCategory] = React.useState("all");
 
     return (
-        <View className="flex-1 bg-white px-[24px] pt-[74px] items-center ">
+        <View className="flex-1 bg-white px-[16px] pt-[74px] items-center ">
             <Text className="text-[28px] font-bold text-[#3F414E] mb-3 ">
                 Méditer
             </Text>
@@ -22,43 +23,54 @@ export default function MeditateScreen() {
                 Nous pouvons apprendre à reconnaître le moment où notre esprit se livre à ses acrobaties quotidiennes habituelles.
             </Text>
 
-            <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerClassName="pt-6 pb-6"
-                data={categories}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        onPress={() => setSelectedCategory(item.id)}
-                        className="items-center mr-5"
-                    >
-                        <View
-                            className={
-                                selectedCategory === item.id
-                                    ? "w-[65px] h-[60px] rounded-[25px] bg-[#8E97FD] items-center justify-center"
-                                    : "w-[65px] h-[60px] rounded-[25px] bg-[#A0A3B1] items-center justify-center"
-                            }
-                        >
-                            <Image
-                                source={item.icon}
-                                className="w-[25px] h-[25px]"
-                                resizeMode="contain"
-                            />
-                        </View>
+            <View className="w-full h-[110px] mb-6">
 
-                        <Text
-                            className={
-                                selectedCategory === item.id
-                                    ? "text-[#3F414E] text-[14px] mt-2"
-                                    : "text-[#A0A3B1] text-[14px] mt-2"
-                            }
+                <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerClassName="pt-6 pb-6"
+                    data={categories}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => setSelectedCategory(item.id)}
+                            className="items-center mr-5"
                         >
-                            {item.name}
-                        </Text>
-                    </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id}
-            />
+                            <View
+                                className={
+                                    selectedCategory === item.id
+                                        ? "w-[65px] h-[60px] rounded-[25px] bg-[#8E97FD] items-center justify-center"
+                                        : "w-[65px] h-[60px] rounded-[25px] bg-[#A0A3B1] items-center justify-center"
+                                }
+                            >
+                                <Image
+                                    source={item.icon}
+                                    className="w-[25px] h-[25px]"
+                                    resizeMode="contain"
+                                />
+                            </View>
+
+                            <Text
+                                className={
+                                    selectedCategory === item.id
+                                        ? "text-[#3F414E] text-[14px] mt-2"
+                                        : "text-[#A0A3B1] text-[14px] mt-2"
+                                }
+                            >
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+
+
+            <View className="w-full">
+                <DailyCalmCard
+                    title="Calme du jour"
+                    subtitle="30 AVR • PAUSE MÉDITATION"
+                />
+            </View>
         </View>
     );
 }
