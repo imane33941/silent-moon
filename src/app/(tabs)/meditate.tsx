@@ -1,9 +1,6 @@
-import { Text, View } from 'react-native';
+import MeditateScreen from '@/screen/meditate/MeditateScreen';
 
 export default function MeditatePage() {
-  return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-[28px] font-bold">Meditation</Text>
-    </View>
-  );
+return <MeditateScreen />;
+
 }
