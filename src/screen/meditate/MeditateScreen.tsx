@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import DailyCalmCard from "./components/DailyCalmCard";
 import MeditationCourseCard from "./components/MeditationCourseCard";
+import { useRouter } from "expo-router";
 
 const categories = [
     { id: "all", name: "Tous", icon: require("../../../assets/icons/Tous.png") },
@@ -39,6 +40,8 @@ const meditationCourses = [
 ];
 
 export default function MeditateScreen() {
+
+    const router = useRouter()
     const [selectedCategory, setSelectedCategory] = React.useState("all");
 
     return (
@@ -99,6 +102,7 @@ export default function MeditateScreen() {
                 <DailyCalmCard
                     title="Calme du jour"
                     subtitle="30 AVR • PAUSE MÉDITATION"
+                    onPress={()=>router.push("/music-player")}
                 />
                 <View className="w-full flex-row flex-wrap gap-x-6 mt-5 p-2">
                     {meditationCourses.map((course) => (
