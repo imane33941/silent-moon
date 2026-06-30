@@ -1,3 +1,4 @@
+import { useAsyncStorage } from '@/hooks/use-async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -9,6 +10,10 @@ export default function Reminders() {
   const router = useRouter();
   const [time, setTime] = useState(new Date());
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [_, setOnboardingCompleted] = useAsyncStorage(
+    'onboardingCompleted',
+    false,
+  );
 
   const toggleDay = (day: string) => {
     setSelectedDays((prev) =>
@@ -85,7 +90,10 @@ export default function Reminders() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => router.replace('/home')}
+          onPress={() => {
+            setOnboardingCompleted(true);
+            router.replace('/(tabs)/home');
+          }}
           className="items-center"
         >
           <Text className="text-[14px] font-semibold text-[#3F414E] tracking-widest">
