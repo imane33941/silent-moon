@@ -241,7 +241,10 @@ if (showLoading || (isLoading && !data)) {
         contentContainerClassName="pb-10"
       >
         {recommendations.map((podcast) => (
-          <View key={podcast.trackId} className="mr-5 w-[162px]">
+          <TouchableOpacity key={podcast.trackId} 
+            className="mr-5 w-[162px]"
+            onPress={() => router.push(`/details/${podcast.trackId}`)}
+            >
             {podcast.artworkUrl600 ? (
               <Image
                 source={{ uri: podcast.artworkUrl600 }}
@@ -269,7 +272,7 @@ if (showLoading || (isLoading && !data)) {
             <Text className="mt-1 text-[10px] font-bold text-[#A1A4B2]">
               PODCAST - {podcast.trackCount ?? 0} ÉPISODES
             </Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </ScrollView>
