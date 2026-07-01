@@ -1,11 +1,26 @@
 import { useRouter } from "expo-router";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
+
 const imagebg = require("../../../assets/music/player-bg.png")
 
 const returnIcon = require("../../../assets/music/icon-music-return.png");
 const nextIcon = require("../../../assets/music/icon-music-next.png");
+const audioSource = require("../../../assets/audio/daily-calm.mp3");
 
 export default function MusicPlayerScreen() {
+    const player = useAudioPlayer(audioSource)
+    const status = useAudioPlayerStatus(player)
+
+    const togglePlayPause = () => {
+        console.log("click play/pause", status)
+        if (status.playing) {
+            player.pause()
+        } else {
+            player.play()
+        }
+    }
+
     const router = useRouter()
     return (
         <ImageBackground
@@ -37,18 +52,24 @@ export default function MusicPlayerScreen() {
                 <Text className="my-2 text-[#A0A3B1] text-[14px]">7 JOURS DE CALME</Text>
 
                 <View className="flex-row items-center justify-center mt-[60px]">
-                    <TouchableOpacity className="w-[44px] h-[44px] items-center justify-center">
+                    <TouchableOpacity
+                        onPress={() => player.seekTo(Math.max(status.currentTime - 15, 0))}
+                        className="w-[44px] h-[44px] items-center justify-center">
                         <Image source={returnIcon} className="w-[26px] h-[26px]" resizeMode="contain" />
                     </TouchableOpacity>
 
                     <View className="w-[88px] h-[88px] rounded-full bg-[#E5E6EC] items-center justify-center mx-[32px]">
-                        <TouchableOpacity className="w-[72px] h-[72px] rounded-full bg-[#3F414E] items-center justify-center mx-[42px]">
-                            <Text className="text-white text-[28px] font-bold">Ⅱ</Text>
+                        <TouchableOpacity
+                            onPress={() => togglePlayPause()}
+                            className="w-[72px] h-[72px] rounded-full bg-[#3F414E] items-center justify-center mx-[42px]">
+                            <Text className="text-white text-[28px] font-bold">{player.playing ? "Ⅱ" : "▶"}</Text>
                         </TouchableOpacity>
                     </View>
 
 
-                    <TouchableOpacity className="w-[44px] h-[44px] items-center justify-center">
+                    <TouchableOpacity
+                        onPress={() => player.seekTo(Math.max(status.currentTime + 15, 0))}
+                        className="w-[44px] h-[44px] items-center justify-center">
                         <Image source={nextIcon} className="w-[26px] h-[26px]" resizeMode="contain" />
                     </TouchableOpacity>
                 </View>
@@ -59,8 +80,8 @@ export default function MusicPlayerScreen() {
                     </View>
 
                     <View className="flex-row justify-between mt-3">
-                        <Text className="text-[#3F414E] text-[12px]">01:30</Text>
-                        <Text className="text-[#3F414E] text-[12px]">45:00</Text>
+                        <Text className="text-[#3F414E] text-[12px]">{status.currentTime}</Text>
+                        <Text className="text-[#3F414E] text-[12px]">{status.duration}</Text>
                     </View>
                 </View>
             </View>
@@ -71,3 +92,4 @@ export default function MusicPlayerScreen() {
 
 
 }
+
