@@ -34,11 +34,11 @@ export default function HomePage() {
   );
 
   return (
-    <View className="flex-1 bg-white" style={{ paddingTop: insets.top }}>
       <ScrollView
-        className="flex-1 px-5"
+        className="flex-1 "
         showsVerticalScrollIndicator={false}
         contentContainerClassName="pb-20"
+        contentContainerStyle={{ paddingTop: insets.top, paddingHorizontal: 16 }}
         refreshControl={
           <RefreshControl
             refreshing={isRefetching}
@@ -206,6 +206,5 @@ export default function HomePage() {
           ))}
         </ScrollView>
       </ScrollView>
-    </View>
   );
 }
