@@ -8,12 +8,18 @@ const returnIcon = require("../../../assets/music/icon-music-return.png");
 const nextIcon = require("../../../assets/music/icon-music-next.png");
 const audioSource = require("../../../assets/audio/daily-calm.mp3");
 
+const formatTime = (timeInSeconds: number) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
+
 export default function MusicPlayerScreen() {
     const player = useAudioPlayer(audioSource)
     const status = useAudioPlayerStatus(player)
 
     const togglePlayPause = () => {
-        console.log("click play/pause", status)
         if (status.playing) {
             player.pause()
         } else {
@@ -80,8 +86,8 @@ export default function MusicPlayerScreen() {
                     </View>
 
                     <View className="flex-row justify-between mt-3">
-                        <Text className="text-[#3F414E] text-[12px]">{status.currentTime}</Text>
-                        <Text className="text-[#3F414E] text-[12px]">{status.duration}</Text>
+                        <Text className="text-[#3F414E] text-[12px]">{formatTime(status.currentTime ?? 0)}</Text>
+                        <Text className="text-[#3F414E] text-[12px]">{formatTime(status.duration ?? 0)}</Text>
                     </View>
                 </View>
             </View>
