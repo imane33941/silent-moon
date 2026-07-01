@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import DailyCalmCard from "./components/DailyCalmCard";
 import MeditationCourseCard from "./components/MeditationCourseCard";
+import { useMeditationCourses } from "@/hooks/useMeditationCourses";
 import { useRouter } from "expo-router";
 
 const categories = [
@@ -40,14 +41,27 @@ const meditationCourses = [
 ];
 
 export default function MeditateScreen() {
-
-    const router = useRouter()
     const [selectedCategory, setSelectedCategory] = React.useState("all");
 
+    const { data, isLoading, error } = useMeditationCourses()
+    const datas = data?.length ? data : meditationCourses;
+
+    const router = useRouter()
+    const onPress = (title: string) => {
+        router.push({
+            pathname: "/music-player",
+            params: {
+                title
+            },
+        }
+
+        );
+
+    }
     return (
-        <ScrollView 
-        contentContainerClassName=" px-[16px] pt-[74px] items-center"
-        className="flex-1 bg-white ">
+        <ScrollView
+            contentContainerClassName=" px-[16px] pt-[74px] items-center"
+            className="flex-1 bg-white ">
             <Text className="text-[28px] font-bold text-[#3F414E] mb-3 ">
                 Méditer
             </Text>
@@ -102,15 +116,16 @@ export default function MeditateScreen() {
                 <DailyCalmCard
                     title="Calme du jour"
                     subtitle="30 AVR • PAUSE MÉDITATION"
-                    onPress={()=>router.push("/music-player")}
+                    onPress={() => router.push("/music-player")}
                 />
                 <View className="w-full flex-row flex-wrap gap-x-6 mt-5 p-2">
-                    {meditationCourses.map((course) => (
+                    {datas.map((course) => (
                         <MeditationCourseCard
                             key={course.id}
                             title={course.title}
                             image={course.image}
                             height={course.height}
+                            onPress={() => onPress(course.title)}
                         />
                     ))}
                 </View>
