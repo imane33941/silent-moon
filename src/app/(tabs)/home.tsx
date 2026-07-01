@@ -3,6 +3,7 @@ import { useGetMeditationPodcasts } from '@/hooks/use-get-home-posdact';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback } from 'react';
+
 import {
   Image,
   RefreshControl,
@@ -174,7 +175,10 @@ export default function HomePage() {
         contentContainerClassName="pb-10"
       >
         {recommendations.map((podcast) => (
-          <View key={podcast.trackId} className="mr-5 w-[162px]">
+          <TouchableOpacity key={podcast.trackId} 
+            className="mr-5 w-[162px]"
+            onPress={() => router.push(`/details/${podcast.trackId}`)}
+            >
             {podcast.artworkUrl600 ? (
               <Image
                 source={{ uri: podcast.artworkUrl600 }}
@@ -202,7 +206,7 @@ export default function HomePage() {
             <Text className="mt-1 text-[10px] font-bold text-[#A1A4B2]">
               PODCAST - {podcast.trackCount ?? 0} ÉPISODES
             </Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </ScrollView>
