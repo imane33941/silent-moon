@@ -18,18 +18,19 @@ export default function MeditationCourseCard({ title, image, height, onPress }: 
                 <ImageBackground
                     source={typeof image === "string" ? { uri: image } : image} style={{ width: "100%", height: "100%", justifyContent: "flex-end" }}
                     resizeMode="cover">
-
-                    <Text className="text-[18px] text-white font-bold p-3">
+                    {/* commenter car l'image contient deja le titre */}
+                    {/* <Text className="text-[18px] text-white font-bold p-3">
                         {title}
-                    </Text>
+                    </Text> */}
 
                 </ImageBackground>
 
             ) : (
                 <View className="w-full h-full bg-[#8E97FD] justify-end">
-                    <Text className="text-[18px] font-bold text-white p-3">
+                    {/* commenter car l'image contient deja le titre */}
+                    {/* <Text className="text-[18px] font-bold text-white p-3">
                         {title}
-                    </Text>
+                    </Text> */}
                 </View>
             )
 
