@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import DailyCalmCard from "./components/DailyCalmCard";
 import MeditationCourseCard from "./components/MeditationCourseCard";
-import { useMeditationCourses } from "@/hooks/useMeditationCourses";
+import { useGetMeditationCourses } from "@/hooks/use-get-meditation-courses";
 import { useRouter } from "expo-router";
 
 const categories = [
@@ -43,7 +43,7 @@ const meditationCourses = [
 export default function MeditateScreen() {
     const [selectedCategory, setSelectedCategory] = React.useState("all");
 
-    const { data, isLoading, error } = useMeditationCourses()
+    const { data, isLoading, error } = useGetMeditationCourses()
     const datas = data?.length ? data : meditationCourses;
 
     const router = useRouter()

@@ -1,10 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 
-const BASE_URL = "https://www.theaudiodb.com/api/v1/json/2/album.php?i=112024";
-type AudioDbAlbum = {
-    idAlbum?: string;
-    strAlbum: string;
-    strAlbumThumb?: string | null;
+const BASE_URL = 'https://itunes.apple.com/search?term=meditation&media=podcast&entity=podcast&country=FR&lang=fr_fr';
+type ItunesPodcast = {
+    trackId: number;
+    trackName: string;
+    artistName: string;
+    artworkUrl600: string;
+    collectionName: string;
+    primaryGenreName: string;
+    trackCount: number;
+    kind: 'podcast';
 }
 export type MeditationCourse = {
     id: string;
@@ -20,10 +25,10 @@ async function fetchMeditationCourses(): Promise<MeditationCourse[]> {
         const data = await response.json();
 
         const heights = [210, 167, 167, 210]
-        return (data.album ?? []).slice(0, 6).map((track: AudioDbAlbum, index: number) => ({
-            id: track.idAlbum ?? track.strAlbum ?? `${index}`,
-            title: track.strAlbum,
-            image: track.strAlbumThumb ? `${track.strAlbumThumb}/medium` : null,
+        return (data.results ?? []).slice(0, 6).map((track: ItunesPodcast, index: number) => ({
+            id: track.trackId.toString(),
+            title: track.trackName,
+            image: track.artworkUrl600 ? `${track.artworkUrl600}/medium` : null,
             height: heights[index] ?? 167,
         }));
 
@@ -34,7 +39,7 @@ async function fetchMeditationCourses(): Promise<MeditationCourse[]> {
 
 }
 
-export function useMeditationCourses() {
+export function useGetMeditationCourses() {
     return useQuery(
         {
             queryKey: ["meditation-courses"],
