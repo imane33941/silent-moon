@@ -2,8 +2,9 @@ import { useAsyncStorage } from '@/hooks/use-async-storage';
 import { useGetMeditationPodcasts } from '@/hooks/use-get-home-posdact';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useFocusEffect, useRouter } from 'expo-router';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   RefreshControl,
   ScrollView,
@@ -21,7 +22,17 @@ export default function HomePage() {
     false,
   );
 
-  const { data, refetch, isRefetching } = useGetMeditationPodcasts();
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+    setShowLoading(false);
+  }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const { data, refetch, isRefetching, isLoading, isError, error } = useGetMeditationPodcasts();
 
   const recommendations = data?.slice(0, 11) ?? [];
 
@@ -32,6 +43,62 @@ export default function HomePage() {
       }
     }, [onboardingCompleted, onboardingCompletedLoading]),
   );
+
+if (isError && !data) {
+  return (
+    <View className="flex-1 items-center justify-center bg-white px-6">
+      <View className="h-[120px] w-[120px] items-center justify-center rounded-full bg-[#FFF3F0]">
+        <Ionicons name="cloud-offline-outline" size={46} color="#EB5757" />
+      </View>
+
+      <Text className="mt-8 text-center text-[22px] font-bold text-[#3F414E]">
+        Oups, une erreur est survenue
+      </Text>
+
+      <Text className="mt-3 text-center text-[15px] leading-6 text-[#A1A4B2]">
+        Nous n'avons pas pu charger les podcasts pour le moment.
+      </Text>
+
+      <Text
+        className="mt-3 text-center text-[12px] text-[#A1A4B2]"
+        numberOfLines={2}
+      >
+        {error?.message ?? 'Something went wrong'}
+      </Text>
+
+      <TouchableOpacity
+        onPress={() => refetch()}
+        className="mt-8 rounded-full bg-[#8E97FD] px-8 py-4"
+      >
+        <Text className="text-[14px] font-bold text-white">Réessayer</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+if (showLoading || (isLoading && !data)) {
+  return (
+    <View className="flex-1 items-center justify-center px-6">
+      <View className="h-[120px] w-[120px] items-center justify-center rounded-full bg-[#F2F3FF]">
+        <Image
+          source={require('../../../assets/welcome-header.png')}
+          className="h-[58px] w-[58px]"
+          resizeMode="contain"
+        />
+      </View>
+
+      <Text className="mt-8 text-center text-[22px] font-bold text-[#3F414E]">
+        Chargement des méditations
+      </Text>
+
+      <Text className="mt-3 text-center text-[15px] leading-6 text-[#A1A4B2]">
+        Nous préparons quelques podcasts relaxants pour toi...
+      </Text>
+
+      <ActivityIndicator size="small" color="#8E97FD" className="mt-8" />
+    </View>
+  );
+}
 
   return (
     <ScrollView
@@ -46,7 +113,7 @@ export default function HomePage() {
         />
       }
     >
-      <View className=" flex-row items-center justify-center">
+      <View className="mt-6 flex-row items-center justify-center">
         <Text className="text-[16px] font-bold tracking-[5px] text-[#3F414E]">
           Silent
         </Text>
