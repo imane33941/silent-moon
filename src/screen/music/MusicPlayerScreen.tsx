@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { DimensionValue, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 
@@ -16,6 +16,9 @@ const formatTime = (timeInSeconds: number) => {
 };
 
 export default function MusicPlayerScreen() {
+
+    const { title, subtitle } = useLocalSearchParams<{ title: string, subtitle: string }>()
+
     const player = useAudioPlayer(audioSource)
     const status = useAudioPlayerStatus(player)
     const progress = status.duration ? status.currentTime / status.duration : 0;
@@ -39,7 +42,7 @@ export default function MusicPlayerScreen() {
 
             <View className="mt-[100px] px-4 w-full flex-row items-center justify-between">
                 <TouchableOpacity
-                    onPress={() =>router.replace("/meditate")}
+                    onPress={() => router.replace("/meditate")}
                     className="w-[55px] h-[55px] rounded-full bg-white items-center justify-center">
                     <Text className="text-[24px] text-[#3F414E]">×</Text>
                 </TouchableOpacity>
@@ -55,9 +58,9 @@ export default function MusicPlayerScreen() {
                 </View>
             </View>
 
-            <View className="flex-1 items-center justify-center">
-                <Text className="text-[34px] font-bold">Concentration</Text>
-                <Text className="my-2 text-[#A0A3B1] text-[14px]">7 JOURS DE CALME</Text>
+            <View className="flex-1 items-center justify-center p-6">
+                <Text className="text-[32px] font-bold">{title ?? "Concentration"}</Text>
+                <Text className="my-2 text-[#A0A3B1] text-[14px]">{subtitle ?? "7 JOURS DE CALME"}</Text>
 
                 <View className="flex-row items-center justify-center mt-[60px]">
                     <TouchableOpacity

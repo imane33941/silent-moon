@@ -51,7 +51,7 @@ export default function MeditateScreen() {
         router.push({
             pathname: "/music-player",
             params: {
-                title
+                title,
             },
         }
 

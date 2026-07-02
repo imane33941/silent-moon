@@ -105,13 +105,21 @@ export default function PodcastDetail() {
           ) : (
             episodes.map((episode, index) => (
               <TouchableOpacity
+                onPress={() =>
+                  router.push({
+                    pathname: "/music-player",
+                    params: {
+                      title: episode.trackName,
+                      subtitle: podcast.collectionName,
+                    },
+                  })
+                }
                 key={episode.trackId}
                 className="mb-4 flex-row items-center gap-4"
               >
                 <View
-                  className={`h-[50px] w-[50px] items-center justify-center rounded-full ${
-                    index === 0 ? 'bg-[#8E97FD]' : 'bg-white border border-[#EBEAEC]'
-                  }`}
+                  className={`h-[50px] w-[50px] items-center justify-center rounded-full ${index === 0 ? 'bg-[#8E97FD]' : 'bg-white border border-[#EBEAEC]'
+                    }`}
                 >
                   <Ionicons
                     name="play"
@@ -120,7 +128,7 @@ export default function PodcastDetail() {
                   />
                 </View>
 
-                
+
                 <View className="flex-1">
                   <Text className="text-[16px] font-semibold text-[#3F414E]" numberOfLines={1}>
                     {episode.trackName}
