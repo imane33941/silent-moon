@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { DimensionValue, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 
 const imagebg = require("../../../assets/music/player-bg.png")
@@ -18,6 +18,8 @@ const formatTime = (timeInSeconds: number) => {
 export default function MusicPlayerScreen() {
     const player = useAudioPlayer(audioSource)
     const status = useAudioPlayerStatus(player)
+    const progress = status.duration ? status.currentTime / status.duration : 0;
+    const progressPercent = `${progress * 100}%` as DimensionValue;
 
     const togglePlayPause = () => {
         if (status.playing) {
@@ -37,7 +39,7 @@ export default function MusicPlayerScreen() {
 
             <View className="mt-[100px] px-4 w-full flex-row items-center justify-between">
                 <TouchableOpacity
-                    onPress={() => router.back()}
+                    onPress={() =>router.replace("/meditate")}
                     className="w-[55px] h-[55px] rounded-full bg-white items-center justify-center">
                     <Text className="text-[24px] text-[#3F414E]">×</Text>
                 </TouchableOpacity>
@@ -68,7 +70,7 @@ export default function MusicPlayerScreen() {
                         <TouchableOpacity
                             onPress={() => togglePlayPause()}
                             className="w-[72px] h-[72px] rounded-full bg-[#3F414E] items-center justify-center mx-[42px]">
-                            <Text className="text-white text-[28px] font-bold">{player.playing ? "Ⅱ" : "▶"}</Text>
+                            <Text className="text-white text-[28px] font-bold">{status.playing ? "Ⅱ" : "▶"}</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -81,8 +83,15 @@ export default function MusicPlayerScreen() {
                 </View>
                 <View className="w-full mt-[48px] px-[24px]">
                     <View className="h-[2px] bg-[#A1A4B2] rounded-full">
-                        <View className="w-[18%] h-[2px] bg-[#3F414E] rounded-full" />
-                        <View className="w-[10px] h-[10px] rounded-full bg-[#3F414E] -mt-[6px] ml-[18%]" />
+                        <View
+                            className="h-[2px] bg-[#3F414E] rounded-full"
+                            style={{ width: progressPercent }}
+                        />
+
+                        <View
+                            className="w-[10px] h-[10px] rounded-full bg-[#3F414E] -mt-[6px]"
+                            style={{ marginLeft: progressPercent }}
+                        />
                     </View>
 
                     <View className="flex-row justify-between mt-3">
