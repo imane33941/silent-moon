@@ -17,7 +17,7 @@ const formatTime = (timeInSeconds: number) => {
 
 export default function MusicPlayerScreen() {
 
-    const { title, subtitle } = useLocalSearchParams<{ title: string, subtitle: string }>()
+    const { title, subtitle } = useLocalSearchParams<{ title?: string, subtitle?: string }>()
 
     const player = useAudioPlayer(audioSource)
     const status = useAudioPlayerStatus(player)
