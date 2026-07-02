@@ -1,5 +1,5 @@
-import React from "react";
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import DailyCalmCard from "./components/DailyCalmCard";
 import MeditationCourseCard from "./components/MeditationCourseCard";
 import { useGetMeditationCourses } from "@/hooks/use-get-meditation-courses";
@@ -42,8 +42,8 @@ const meditationCourses = [
 
 export default function MeditateScreen() {
     const [selectedCategory, setSelectedCategory] = React.useState("all");
-
-    const { data, isLoading, error } = useGetMeditationCourses()
+    const [showLoading, setShowLoading] = useState(true);
+    const { data, isLoading, error, isError } = useGetMeditationCourses()
     const datas = data?.length ? data : meditationCourses;
 
     const router = useRouter()
@@ -56,8 +56,16 @@ export default function MeditateScreen() {
         }
 
         );
-
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowLoading(false);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <ScrollView
             contentContainerClassName=" px-[16px] pt-[74px] items-center"
@@ -118,6 +126,22 @@ export default function MeditateScreen() {
                     subtitle="30 AVR • PAUSE MÉDITATION"
                     onPress={() => router.push("/music-player")}
                 />
+                {
+                    (showLoading || isLoading) && (
+                        <View className="flex-row items-center justify-center mt-4 gap-2">
+                            <Text className="text-[#A1A4B2] text-[14px]" >Chargement des méditations</Text>
+                            <ActivityIndicator size="small" color="#8E97FD" />
+                        </View>
+                    )
+                }
+
+                {
+                    isError && (
+                        <Text className="text-red-500 text-[14px] mt-4">
+                            Données en ligne indisponibles, affichage des méditations locales.
+                        </Text>
+                    )
+                }
                 <View className="w-full flex-row flex-wrap gap-x-6 mt-5 p-2">
                     {datas.map((course) => (
                         <MeditationCourseCard
